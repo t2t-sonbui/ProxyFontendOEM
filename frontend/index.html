@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html>
+<title>3G/4G Proxy Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/solid.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/fontawesome.min.css">
+
+<!--  -->
+
+
+<style>
+  html,
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: "Roboto", sans-serif
+  }
+
+  .myLink {
+    display: none
+  }
+
+  #snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+  }
+
+  #snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+
+  @-webkit-keyframes fadein {
+    from {
+      bottom: 0;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 30px;
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadein {
+    from {
+      bottom: 0;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 30px;
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes fadeout {
+    from {
+      bottom: 30px;
+      opacity: 1;
+    }
+
+    to {
+      bottom: 0;
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeout {
+    from {
+      bottom: 30px;
+      opacity: 1;
+    }
+
+    to {
+      bottom: 0;
+      opacity: 0;
+    }
+  }
+
+  /* Style the form - display items horizontally */
+  .form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+  }
+
+  /* Add some margins for each label */
+  .form-inline label {
+    margin: 5px 10px 5px 0;
+  }
+
+  /* Style the input fields */
+  .form-inline input {
+    vertical-align: middle;
+    margin: 5px 10px 5px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+
+
+  /* Style the submit button */
+  .form-inline button {
+    padding: 10px 20px;
+    background-color: dodgerblue;
+    border: 1px solid #ddd;
+    color: white;
+  }
+
+  .form-inline button:hover {
+    background-color: royalblue;
+  }
+
+  /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
+  @media (max-width: 800px) {
+    .form-inline input {
+      margin: 10px 0;
+    }
+
+
+    .form-inline {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  textarea {
+    max-width: 100%;
+    width: 100% margin: 5px 10px 5px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    max-width: 100%;
+    width: 100%
+  }
+</style>
+
+<body class="w3-light-grey en">
+  <!-- Top container -->
+  <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i
+        class="fa fa-bars"></i>  Menu</button>
+
+    <span class="w3-bar-item w3-right">3G/4G Proxy</span>
+
+  </div>
+
+
+  <!-- Sidebar/menu -->
+  <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+    <!-- <div class="w3-container w3-row">
+      <div class="w3-col s4">
+        <img src="avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+      </div>
+      <div class="w3-col s8 w3-bar">
+        <span>Welcome, <strong>Admin</strong></span><br>
+        <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+        <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+        <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+      </div>
+    </div>
+    <hr>
+  -->
+    <!-- <div class="w3-container">
+      <h5>Dashboard</h5>
+    </div> -->
+    <div class="w3-bar-block">
+      <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+        onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+      <a href="#" id="menu_dashboard" class="w3-bar-item w3-button w3-padding tablink"><i
+          class="fa fa-tachometer-alt fa-fw"></i>  Dashboard</a>
+
+      <a href="#" id="menu_schedule" class="w3-bar-item w3-button w3-padding tablink"><i
+          class="fa fa-calendar-check fa-fw"></i>  Schedule</a>
+
+      <a href="#" id="menu_setting" class="w3-bar-item w3-button w3-padding tablink"><i class="fa fa-cog fa-fw"></i> 
+        Settings</a>
+      <a href="#" id="menu_license" class="w3-bar-item w3-button w3-padding tablink"><i class="fa fa fa-key fa-fw"></i> 
+        Licence</a>
+      <a href="#" id="menu_api" class="w3-bar-item w3-button w3-padding tablink"><i class="fa fa-bell fa-fw"></i> 
+        Api</a>
+      <a href="#" id="menu_support" class="w3-bar-item w3-button w3-padding tablink"><i class="fa fa-users fa-fw"></i> 
+        Support</a>
+
+      <br><br>
+    </div>
+  </nav>
+
+  <!-- Model dialog -->
+
+  <div id="modal_add_cronjob" class="w3-modal">
+    <form action="/schedule/add" method="post" id="addScheduleForm">
+      <div class="w3-modal-content w3-card-4 w3-animate-zoom">
+        <header class="w3-container w3-deep-purple">
+          <span onclick="document.getElementById('modal_add_cronjob').style.display='none'"
+            class="w3-button w3-deep-purple w3-xlarge w3-display-topright">&times;</span>
+          <h3 id="gen_schedule_title"><span class="w3-text-white">Add Schedule Job</span></h3>
+        </header>
+        <div class="w3-container translatable_noServerBody" style="margin:0 -16px">
+          <p></p>
+          <p style="margin:0 16px">
+            <label>Jobs Type</label>
+            <select class="w3-select w3-border w3-round" name="add_job_select" id="add_job_select"
+              onchange="Ardublockly.changeCronjobAdd()">
+              <option value="" disabled>Select one type</option>
+              <option value="RENEW_IP_ALL" selected>Reset all proxy IP</option>
+              <option value="RENEW_IP_SPECIFY">Reset list proxy IP</option>
+            </select>
+          </p>
+          <p></p>
+          <p style="margin:0 16px">
+            <!-- https://en.rakko.tools/tools/88/ -->
+            <!-- https://www.freeformatter.com/cron-expression-generator-quartz.html# -->
+            <label>Cron Expression (<a style="text-decoration:none" class="w3-text-green " href="./crontool"
+                target="_blank">Generator
+                Helper</a>)</label>
+            <input class="w3-input w3-border w3-round" name="add_job_cron_express" type="text" id="add_job_cron_express"
+              required>
+          </p>
+          <p>
+          <div class="w3-row">
+            <div class="w3-container">
+              <label>List proxy by line</label>
+              <textarea name="add_list_id" rows="4" id="add_list_id" disabled></textarea>
+            </div>
+          </div>
+          </p>
+
+        </div>
+        <div class="w3-container w3-padding w3-bar">
+          <button class="w3-button w3-right  w3-white w3-border w3-border-gray w3-text-gray w3-round-large" type="reset"
+            onclick="document.getElementById('modal_add_cronjob').style.display='none'">Cancel</button>
+          <button
+            class="w3-button w3-right w3-margin-right w3-white w3-border w3-border-green w3-text-green w3-round-large"
+            id="button_add_schedule_save" type="submit">Add</button>
+
+          <button
+            class="w3-button w3-right w3-margin-right w3-white w3-border w3-border-green w3-text-green w3-round-large"
+            id="button_update_schedule" type="reset">Update</button>
+
+          <button class="w3-button w3-right w3-margin-right w3-white w3-border w3-border-red w3-text-red w3-round-large"
+            id="button_delete_schedule" type="reset">Delete</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <div id="modal_notify" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom">
+      <header class="w3-container w3-blue">
+        <span onclick="document.getElementById('modal_notify').style.display='none'"
+          class="w3-button w3-blue w3-xlarge w3-display-topright">&times;</span>
+        <h3 id="gen_alert_title"><span class="w3-text-white">Proxy app not running</span></h3>
+      </header>
+      <div class="w3-container translatable_noServerBody">
+        <p></p>
+        <p>Curent Proxy system service is not running</p>
+        <p>Please wait or try restart after few one minute</p>
+      </div>
+
+      <div class="w3-container w3-light-grey w3-padding">
+        <button class="w3-button w3-right w3-white w3-border"
+          onclick="document.getElementById('modal_notify').style.display='none'">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal_license" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom">
+      <header class="w3-container w3-blue">
+        <span onclick="document.getElementById('modal_license').style.display='none'"
+          class="w3-button w3-blue w3-xlarge w3-display-topright">&times;</span>
+        <h3 id="gen_alert_title"><span class="w3-text-white">License certificate failed</span></h3>
+      </header>
+      <div class="w3-container">
+        <p></p>
+        <p>
+          <!-- Chúng tôi không thể kiểm tra chứng chỉ đăng ký của thiết bị hoặc thời gian dùng thử đã hết hạn. Nếu đây là lần đầu tiên sử dụng sản phẩm bạn có thể đăng ký dùng thử 30 ngày  trước khi  quyết định đăng ký gói hỗ trợ Pro đầy đủ tính năng -->
+          We were unable to check the device's registration certificate or the trial period has expired. If this is your
+          first time using the product, you can sign up for a 30-day trial before deciding to subscribe to the
+          full-featured Pro support
+          package.
+        </p>
+        <p>
+        <div class="w3-bar">
+          <button class="w3-btn w3-white w3-border w3-border-red w3-text-red w3-round-large"
+            id="button_trial_license">Try the software</button>
+          <button class="w3-btn w3-margin-left w3-white w3-border w3-border-green w3-text-green w3-round-large"
+            id="button_pro_license">Pro Active</button>
+        </div>
+        </p>
+      </div>
+
+      <div class="w3-container w3-light-grey w3-padding">
+        <button class="w3-button w3-right w3-white w3-border"
+          onclick="document.getElementById('modal_license').style.display='none'">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal_proxy" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-top">
+      <header class="w3-container w3-blue">
+        <span onclick="document.getElementById('modal_proxy').style.display='none'"
+          class="w3-button w3-blue w3-xlarge w3-display-topright">&times;</span>
+        <h3><span class="w3-text-white" id="gen_id_title">Proxy app not running</span></h3>
+      </header>
+
+      <div class="w3-bar w3-border-bottom">
+        <button class="proxytablink w3-bar-item w3-button"
+          onclick="openProxyMoreAction(event, 'Act_More_Proxy')">Proxy</button>
+        <button class="proxytablink w3-bar-item w3-button"
+          onclick="openProxyMoreAction(event, 'Act_More_Modem')">Modem</button>
+      </div>
+
+      <div id="Act_More_Proxy" class="w3-container proxy_config_table">
+        <div class="w3-row">
+
+          <div class="w3-half w3-container">
+            <p>
+              <label>Unique Proxy Port</label>
+              <input class="w3-input w3-border w3-round" name="bein_port" max="65535" min="0" type="number"
+                id="single_settings_port_begin">
+            </p>
+            <p>
+              <label>Proxy Authenication Username</label>
+              <input class="w3-input w3-border w3-round" name="proxy_user" type="text"
+                id="single_settings_proxy_auth_username">
+            </p>
+            <p>
+              <label>Proxy Authenication Password</label>
+              <input class="w3-input w3-border w3-round" name="proxy_pass" type="text"
+                id="single_settings_proxy_auth_password">
+            </p>
+          </div>
+
+          <div class="w3-half w3-container">
+            <p>
+            <fieldset>
+              <!-- <legend>Information</legend> -->
+              Received: <span id="modem_received"></span>
+              <p>Sent: <span id="modem_sent"></span></p>
+              <p>Active Time: <span id="modem_active_time"></span></p>
+              <p>Status: <span id="more_proxy_status"></span></p>
+              <p>Network OP: <span id="modem_network_op"></span></p>
+              Data Enable: <span id="modem_data_en"></span>
+            </fieldset>
+            </p>
+          </div>
+
+        </div>
+        <p><span class="w3-text-red">Apply changes will be applied after system restart.</span></p>
+        <p>
+        <div class="w3-bar">
+          <button class="w3-btn w3-margin-right w3-white w3-border w3-border-blue w3-text-blue w3-round-large"
+            id="button_single_proxy_save">Apply</button>
+          <button class="w3-btn w3-margin-left w3-white w3-border w3-border-red w3-text-red w3-round-large"
+            id="button_disable_proxy">Disable</button>
+          <button class="w3-btn w3-margin-left w3-white w3-border w3-border-green w3-text-green w3-round-large"
+            id="button_enable_proxy">Enable</button>
+        </div>
+        </p>
+
+      </div>
+      <div id="Act_More_Modem" class="w3-container proxy_config_table">
+        <div class="w3-row">
+          <div class="w3-half w3-container">
+            <p>Device name: <span id="modem_device_name"></span></p>
+            <p>Phone number: <span id="modem_phone_number"></span></p>
+            <p>Network: <span id="modem_network"></span></p>
+            <p>Software Version: <span id="modem_software"></span></p>
+            <p>Hardware Version: <span id="modem_hardware"></span></p>
+            <p>IMEI: <span id="modem_imei"></span></p>
+            <p>Mac Address: <span id="modem_mac"></span></p>
+            <p>IMSI: <span id="modem_imsi"></span></p>
+            <!-- <p>Wan Address: <span id="modem_wan"></span></p> -->
+
+          </div>
+          <div class="w3-half w3-container">
+            <fieldset>
+              <legend>USSD Command</legend>
+              <div class="w3-cell-row" style="margin:0 -16px">
+                <div class="w3-container w3-cell">
+                  <input class="w3-input w3-border w3-round" type="text" id="modem_ussd_command">
+                </div>
+                <div class="w3-cell w3-cell-middle">
+                  <button class="w3-btn w3-white w3-border w3-border-green w3-text-green w3-round-large"
+                    id="button_send_ussd">Send</button>
+                </div>
+                <div class="w3-cell w3-cell-middle">
+                  <button class="w3-btn w3-margin-left w3-white w3-border w3-border-red w3-text-red w3-round-large"
+                    id="button_cancel_ussd">Cancel</button>
+                </div>
+              </div>
+              <p>Response</p>
+              <textarea id="ussd_response" rows="4">
+              </textarea>
+
+              <div class="ussd_general_result" id="general_result" style="overflow-x:hidden;overflow-y:scroll">
+                <table id="general_result_table" class="general_result_table">
+                </table>
+              </div>
+
+            </fieldset>
+          </div>
+        </div>
+        <p>
+        <div class="w3-bar">
+          <button class="w3-btn w3-white w3-border w3-border-red w3-text-red w3-round-large"
+            id="button_disable_data">Disable Data</button>
+          <button class="w3-btn w3-margin-left w3-white w3-border w3-border-green w3-text-green w3-round-large"
+            id="button_enable_data">Enable Data</button>
+        </div>
+
+        </p>
+
+      </div>
+
+      <!-- <div class="w3-container w3-light-grey w3-padding">
+        <button class="w3-button w3-right w3-white w3-border" onclick="document.getElementById('modal_proxy').style.display='none'">Close</button>
+      </div> -->
+    </div>
+  </div>
+
+
+  <!-- End dialog -->
+
+  <!-- Overlay effect when opening sidebar on small screens -->
+  <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+    title="close side menu" id="myOverlay"></div>
+
+  <!-- !PAGE CONTENT! -->
+  <div class="w3-main" style="margin-left:300px;margin-top:43px;">
+    <!-- Header -->
+
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b> System</b></h5>
+    </header>
+    <div class="w3-row-padding w3-margin-bottom">
+      <div class="w3-quarter">
+        <div class="w3-container w3-red w3-padding-16">
+          <div class="w3-left"><i class="fa fa-exclamation-circle w3-xxxlarge"></i></div>
+          <div class="w3-right">
+            <h3><span id="run_info_proxy_error">/</span></h3>
+          </div>
+          <div class="w3-clear"></div>
+          <h4>Error</h4>
+        </div>
+      </div>
+      <div class="w3-quarter">
+        <div class="w3-container w3-blue w3-padding-16">
+          <div class="w3-left"><i class="fa fa-server w3-xxxlarge"></i></div>
+          <div class="w3-right">
+            <h3><span id="run_info_proxy_running">/</span></h3>
+          </div>
+          <div class="w3-clear"></div>
+          <h4>Running</h4>
+        </div>
+      </div>
+      <div class="w3-quarter">
+        <div class="w3-container w3-teal w3-padding-16">
+          <div class="w3-left"><i class="fa fa-memory w3-xxxlarge"></i></div>
+          <div class="w3-right">
+            <h3><span id="run_info_memory">/</span></h3>
+          </div>
+          <div class="w3-clear"></div>
+          <h4>Memory</h4>
+        </div>
+      </div>
+      <div class="w3-quarter">
+        <div class="w3-container w3-orange w3-text-white w3-padding-16">
+          <div class="w3-left"><i class="fa fa-microchip w3-xxxlarge"></i></div>
+          <div class="w3-right">
+            <h3><span id="run_info_cpu">%</span></h3>
+          </div>
+          <div class="w3-clear"></div>
+          <h4>CPU</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="w3-panel myLink" id="show_dashboad">
+      <div class="w3-row-padding" style="margin:0 -8px">
+        <div class="w3-rest">
+
+          <div class="w3-bar w3-theme">
+            <h5> <span class="w3-bar-item" style="margin:0 -16px"> Proxy Stats</span></h5>
+            <!-- <a class="w3-bar-item w3-button w3-right w3-hide" href="#" id="btn_sync_proxy"><i class="fa fa-retweet"></i> Sync</a> -->
+            <button class="w3-bar-item w3-button w3-teal w3-right w3-hide" id="btn_sync_proxy"><i
+                class="fa fa-retweet"></i> Sync</button>
+          </div>
+          <div style="overflow-x:auto;" id="dashboard_list_proxy" class="w3-hide">
+            <table class="w3-table w3-striped w3-white w3-hoverable w3-border" id="proxy_table">
+              <tr class="w3-green">
+                <th>#</th>
+                <th>Device</th>
+                <th>Network</th>
+                <th>Public IP</th>
+                <th>Proxy Address [Socks Port]</th>
+                <th>Status</th>
+                <th>Uptime</th>
+                <th class="w3-center">Action</th>
+              </tr>
+
+
+              <!-- <tr>
+                <td><b class="w3-text-blue">2</b></td>
+                <td>eth10/ABCDEF</td>
+                <td>Vinaphone-4G,LTE-5/5</td>
+                <td>123.456.78.9.11</td>
+                <td>192.168.0.9:8002</td>
+                <td>Running</td>
+                <td class="w3-center">
+                  <div class="w3-bar">
+                    <a href="#" class="w3-margin-right w3-text-red" id="button_action_newip"><i class="fa fa-sync w3-spin"></i></a>
+                    <a href="#" class="w3-text-green" id="button_action_setting"><i class="fa fa-cog"></i></a>
+                  </div>
+                </td>
+              </tr> -->
+
+            </table>
+          </div>
+
+          <div class="w3-center">
+            <p id="dashboard_loading" class="w3-hide w3-red w3-xlarge">
+              <i class="fa fa-spinner fa-spin"></i> <span id="dashboard_loading_content">Loading...</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule -->
+    <div class="w3-panel myLink" id="show_schedule">
+      <div class="w3-row-padding" style="margin:0 -8px">
+        <div class="w3-rest">
+          <div class="w3-bar w3-theme">
+            <h5> <span class="w3-bar-item" style="margin:0 -16px"> Schedule Jobs</span></h5>
+            <button class="w3-bar-item w3-button w3-deep-purple w3-right" id="btn_add_schedule"><i
+                class="fa fa-plus"></i> New Job</button>
+          </div>
+          <div style="overflow-x:auto;" id="dashboard_list_jobs">
+            <table class="w3-table w3-striped w3-white w3-hoverable w3-border" id="jobs_table">
+              <tr class="w3-deep-purple">
+                <th>#</th>
+                <th>Cron Expression</th>
+                <th>Describe</th>
+                <th>List Execute</th>
+                <th class="w3-center">Action</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Setting-->
+    <div class="w3-panel myLink" id="show_setting">
+      <div class="w3-row-padding" style="margin:0 -16px">
+        <div class="w3-half">
+          <h5>Proxy Common Setting</h5>
+          <div class="w3-container w3-white">
+            <p>Setting will apply for all proxy in default.</p>
+            <p>
+              <label>Proxy IP</label>
+              <select class="w3-select w3-border w3-round" name="proxy_ip" id="settings_proxy_ip">
+                <option value="" disabled selected>Select one address</option>
+
+              </select>
+            </p>
+            <p>
+              <label>Port begin</label>
+              <input class="w3-input w3-border w3-round" name="bein_port" max="65535" min="0" type="number"
+                id="settings_port_begin">
+            </p>
+            <p>
+              <label>Proxy Authenication Username</label>
+              <input class="w3-input w3-border w3-round" name="proxy_user" type="text"
+                id="settings_proxy_auth_username">
+            </p>
+
+            <p>
+              <label>Proxy Authenication Password</label>
+              <input class="w3-input w3-border w3-round" name="proxy_pass" type="text"
+                id="settings_proxy_auth_password">
+            </p>
+
+            <p>
+              <span class="w3-text w3-large">Modem common settings</span></p>
+            <p>
+            <div class="w3-row" style="margin:0 -16px">
+              <div class="w3-container w3-third">
+                <label>Admin Login Password</label>
+                <input class="w3-input w3-border w3-round" name="settings_modem_admin_password" type="text"
+                  placeholder="Password required login for Hilink, Jazz" id="settings_modem_admin_password">
+              </div>
+              <div class="w3-container w3-third">
+                <label>Network wait connected</label>
+                <input class="w3-input w3-border w3-round" name="settings_modem_network_wait_connected" type="number"
+                  placeholder="Second wait from enable data connect" min="1" id="settings_modem_network_wait_connected">
+              </div>
+              <div class="w3-container w3-third">
+                <label>Timeout wait connected</label>
+                <input class="w3-input w3-border w3-round" name="settings_modem_timeout_wait_connected" type="number"
+                  placeholder="Second wait maxtime for enable connect" min="1"
+                  id="settings_modem_timeout_wait_connected">
+              </div>
+            </div>
+            </p>
+
+
+            <p>
+              <label>Reset IP Mode</label>
+              <select class="w3-select w3-border w3-round" name="adv_settings_change_ip_mode"
+                id="adv_settings_change_ip_mode">
+                <option value="" disabled>Select one type</option>
+                <option value="CHANGE_NET_AUTO_2G_AUTO" selected>AUTO->GSM->AUTO</option>
+                <option value="CHANGE_NET_4G_3G_4G">LTE->UMTS->LTE</option>
+                <option value="SWITCH_3G_ON_OFF">Disable->Enable (3G Data)</option>
+                <option value="SWITCH_SMART" disabled>Smart Mode</option>
+              </select>
+            </p>
+
+            <p>
+              <input class="w3-check" type="checkbox" id="cb_proxy_include_result_ip">
+              <label> Include new internet address value when run Reset IP </label>
+            </p>
+
+            <p></p>
+            <p>
+            <p><span class="w3-text-red">For advanced users, configured to achieve the maximum speed or number of
+                devices based on device resources</span></p>
+            <div>
+              <!-- <fieldset>
+                <legend>Advanture Config</legend> -->
+
+              <div id="adv_common_config" class="w3-container" style="margin:0 -16px">
+                <div class="w3-row">
+
+                  <div class="w3-half w3-container" style="margin:0 -16px">
+
+                    <p>
+                      <label>Client To Proxy Acceptor Threads</label>
+                      <input class="w3-input w3-border w3-round" max=16 min=1 type="number"
+                        id="adv_settings_clientToProxyAcceptorThreads">
+                    </p>
+
+                    <p>
+                      <label>Client To Proxy Worker Threads</label>
+                      <input class="w3-input w3-border w3-round" max=56 min=4 type="number"
+                        id="adv_settings_clientToProxyWorkerThreads">
+                    </p>
+
+                    <p>
+                      <label>Proxy To Server Worker Threads</label>
+                      <input class="w3-input w3-border w3-round" max=56 min=4 type="number"
+                        id="adv_settings_proxyToServerWorkerThreads">
+                    </p>
+
+                    <p>
+                      <label>Max Chunk Size (bytes)</label>
+                      <input class="w3-input w3-border w3-round" min=8192 type="number" id="adv_settings_maxChunkSize">
+                    </p>
+
+                  </div>
+
+                  <div class="w3-half w3-container w3-margin">
+
+                    <p>
+                      <input class="w3-check" type="checkbox" id="cb_proxy_socks">
+                      <label> Socks Proxy Support </label>
+                    </p>
+
+                    <p>
+                      <input class="w3-check" type="checkbox" id="adv_cb_proxy_transparent">
+                      <label>Transparent Proxy</label>
+                    </p>
+                    <p class="w3-hide">
+                      <input class="w3-check" type="checkbox" id="adv_cb_proxy_allowLocalOnly">
+                      <label>Allow Local Only</label>
+                    </p>
+                    <p>
+                      <input class="w3-check" type="checkbox" id="adv_cb_proxy_allowRequestToOriginServer">
+                      <label>Allow Request To Origin Server</label>
+                    </p>
+                    <p class="w3-hide">
+                      <input class="w3-check" type="checkbox" id="adv_cb_proxy_acceptProxyProtocol">
+                      <label>Accept Proxy Protocol</label>
+                    </p>
+                    <p class="w3-hide">
+                      <input class="w3-check" type="checkbox" id="adv_cb_proxy_sendProxyProtocol">
+                      <label>Send Proxy Protocol</label>
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- </fieldset> -->
+            </div>
+            </p>
+            <p><span class="w3-text-red">Changes will be applied after restart. Apply all will clear all proxy single
+                config.</span></p>
+            <p>
+            <div class="w3-bar">
+              <button class="w3-btn w3-white w3-border w3-border-green w3-text-green w3-round-large"
+                id="button_common_save_new">Apply New</button>
+              <button class="w3-btn w3-margin w3-white w3-border w3-border-orange w3-text-orange w3-round-large"
+                id="button_common_save_all">Apply All</button>
+            </div>
+            </p>
+          </div>
+
+        </div>
+        <div class="w3-half">
+
+          <h5>System Config</h5>
+          <div class="w3-container w3-white">
+            <p>
+              <input class="w3-check" type="checkbox" checked="checked" disabled>
+              <label> Auto start proxy</label></p>
+            <p>
+              <input class="w3-check" type="checkbox" id="cb_modem_connection">
+              <label> Auto stop/start when modem connection change</label>
+            </p>
+            <p>
+              <input class="w3-check" type="checkbox" id="cb_modem_network">
+              <label>Check network status every minute</label>
+            </p>
+            <p><button class="w3-btn w3-white w3-border w3-border-blue w3-text-blue w3-round-large"
+                id="button_system_save">Save</button></p>
+            <p><span class="w3-text-red">Disable selected for better perfomace.</span></p>
+          </div>
+
+          <h5>System Information</h5>
+          <div class="w3-container w3-white" id="sysInfo">
+            <p>
+              <label> Proxy Version:</label>
+              <b> <span id="sysInfoProxyVersion"></span></b>
+            </p>
+            <p>
+              <label> Environment:</label>
+              <span id="sysInfoJvm"></span>
+            </p>
+            <p>
+              <label> Device Uptime:</label>
+              <span id="sysInfoUptime"></span>
+            </p>
+            <p>
+              <label> Operating system:</label>
+              <span id="sysInfoOs"></span>
+            </p>
+            <p>
+              <label> Processor:</label>
+              <span id="sysInfoCpu"> </span> </p>
+            <p>
+              <label> Memory:</label>
+              <span id="sysInfoRam"></span>
+            </p>
+            <p>
+              <button
+                class="w3-bar-item w3-btn w3-margin-right w3-white w3-border w3-border-red w3-text-red w3-round-large"
+                id="button_system_reboot_device">Reboot Device</button>
+            </p>
+          </div>
+
+          <h5>System Action</h5>
+          <div class="w3-container w3-white">
+            <p>
+              <span class="w3-text-red" id="actionMsg"></span>
+            </p>
+
+            <div class="w3-bar" style="margin:16px 0">
+              <div class="w3-bar-item w3-left" style="margin:0 -16px">
+                <button class="w3-btn w3-margin-right w3-white w3-border w3-border-blue w3-text-blue w3-round-large"
+                  id="button_system_check_update">Check OTA</button>
+                <button class="w3-btn w3-white w3-border w3-border-green w3-text-green w3-round-large"
+                  id="button_system_update" disabled>Run Update</button>
+              </div>
+
+              <div class="w3-bar-item  w3-right" style="margin:0 -16px">
+
+                <button
+                  class="w3-btn w3-margin-right w3-white w3-border w3-border-orange w3-text-orange w3-round-large "
+                  id="button_system_shutdown">Shutdown</button>
+                <button class="w3-btn w3-white w3-border w3-border-orange w3-text-orange w3-round-large"
+                  id="button_system_factory">Factory Reset</button>
+                <button class="w3-btn w3-margin-left w3-white w3-border w3-border-red w3-text-red w3-round-large"
+                  id="button_system_restart">Restart</button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Licence -->
+    <div class="w3-panel myLink" id="show_license">
+      <div class="w3-row-padding" style="margin:0 -8px">
+        <div class="w3-rest">
+          <h5>Licence</h5>
+          <div class="w3-container w3-white">
+            <div class="w3-row">
+              <div class="w3-col m6">
+                <p><i class="fa fa-fw fa-plug"></i> Max proxy: <b><span id="license_amount"></span></b></p>
+                <p><i class="fa fa-fw fa-calendar"></i> Active date: <b><span id="license_active_date"></span></b></p>
+                <p><i class="fa fa-fw fa-qrcode"></i> Key active: <b><span id="license_active_key"></span></b></p>
+              </div>
+
+              <div class="w3-col m6">
+                <p><i class="fa fa-fw fa-lock"></i> Active Type: <b><span id="license_active_type"></span></b></p>
+                <p><i class="fa fa-fw fa-hourglass-end"></i> Exp : <b><span id="license_active_end"></span></b></p>
+                <p><i class="fa fa-fw fa-check"></i> Status: <b><span id="license_active_status"></span></b></p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="w3-panel w3-red w3-display-container w3-card w3-hide" id="license_warn">
+            <span onclick="this.parentElement.style.display='none'"
+              class="w3-button w3-large w3-display-topright">&times;</span>
+            <h3>Warning!</h3>
+            <p>You are use <b>Trial</b> version with limit time to use, please order to <b>Pro</b> version to unlock all
+              feature.</p>
+          </div>
+
+          <h5>Register License</h5>
+          <div class="w3-container w3-white">
+
+            <form action="/license/active" method="post" id="activeLicenseForm">
+              <div class="w3-section">
+                <p>
+                  <label>Your Name</label>
+                  <input class="w3-input w3-border w3-round" type="text" name="name" id="user_active_name">
+                </p>
+                <p>
+                  <label>Your Phone</label>
+                  <input class="w3-input w3-border w3-round" type="number" name="phone" id="user_active_phone">
+                </p>
+                <p>
+                  <label>Address</label>
+                  <input class="w3-input w3-border w3-round" type="text" name="address" id="user_active_address">
+                </p>
+                <p>
+                  <label>Key Active(*)</label>
+                  <input class="w3-input w3-border w3-round" type="text" name="key" required id="user_active_key">
+                </p>
+                <p> <button class="w3-btn w3-white w3-border w3-border-blue w3-text-blue w3-round-large"
+                    id="button_active_license" type="submit">Active</button></p>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Api -->
+    <div class="w3-panel myLink" id="show_api">
+      <div class="w3-row-padding" style="margin:0 -16px">
+        <div class="w3-rest">
+          <h5>Endpoint API Controls</h5>
+          <div class="w3-container w3-white">
+            <div class="w3-row">
+              <h4>Common</h4>
+              <ul>
+                <li>API - Renew specified proxy: <code class="w3-text-pink">GET /proxy_reset?proxy={port_number} </code>
+                  or <code class="w3-text-pink">GET /proxy_reset?proxy={proxy_ip}:{port_number} </code>
+                  <ul>
+                    <i>
+                      <li>Desc: Renew specified proxy (by port number) to obtain a new IP </li>
+                      <li>Examp: GET /proxy_reset?proxy=1880 or GET /proxy_reset?proxy=192.168.0.15:1880 </li>
+                    </i>
+                  </ul>
+                </li>
+
+                <li>API - Renew all proxy: <code class="w3-text-pink">GET /reset_all </code>
+                  <ul>
+                    <i>
+                      <li>Desc: Renew all proxy to obtain a new IP </li>
+                      <li>Examp: GET /reset_all</li>
+                    </i>
+                  </ul>
+                </li>
+              </ul>
+
+              <h4>Control Proxy</h4>
+              <ul>
+                <li>API - Get all proxy information: <code class="w3-text-pink">GET /proxy </code>
+                  <ul>
+                    <i>
+                      <li>Desc: Get all Proxy information </li>
+                      <li>Examp: GET /proxy</li>
+                    </i>
+                  </ul>
+                </li>
+
+                <li>API - Get specified proxy: <code class="w3-text-pink">GET /proxy/info/{proxyId} </code>
+                  <ul>
+                    <i>
+                      <li>Desc: Get specified Proxy information </li>
+                      <li>Examp: GET /proxy/info/866785035120194</li>
+                    </i>
+                  </ul>
+                </li>
+
+                <li>API - Check proxy ip address: <code class="w3-text-pink">GET /proxy/ip </code>
+                  <ul>
+                    <i>
+                      <li>Desc: Get all proxy current IP address </li>
+                      <li>Examp: GET /proxy/ip </li>
+                    </i>
+                  </ul>
+                </li>
+
+                <li>API - Check specified proxy ip: <code class="w3-text-pink">GET /proxy/ip/{proxyId} </code>
+                  <ul>
+                    <i>
+                      <li>Desc: Get specified proxy current IP address </li>
+                      <li>Examp: GET /proxy/ip/866785035120194 </li>
+                    </i>
+                  </ul>
+                </li>
+              </ul>
+              <h4>Control Modem</h4>
+              <ul>
+                <li>API - Enable mobilde data connect : <code
+                    class="w3-text-pink">GET /proxy_data_enable?proxy={port_number}&enable={num_state} </code>
+                  <ul>
+                    <i>
+                      <li>Desc: Control Enable mobilde data connect for modem associate with proxy</li>
+                      <li>Examp Enable: GET /proxy_data_enable?proxy=1894&enable=1 </li>
+                      <li>Examp Diable: GET /proxy_data_enable?proxy=1894&enable=0 </li>
+                    </i>
+                  </ul>
+                </li>
+
+                <li>API - Execute USSD code : <code
+                    class="w3-text-pink">GET /proxy_ussd?proxy={port_number}&ussd={ussd_code} </code>
+                  <ul>
+                    <i>
+                      <li>Desc: Execute ussd code and get response</li>
+                      <li>Examp From Browser URL (%23 is '#' url encode): GET /proxy_ussd?proxy=1894&ussd=*101%23 </li>
+                      <li>Examp From App Request : GET /proxy_ussd?proxy=1894&ussd=*101# </li>
+                    </i>
+                  </ul>
+                </li>
+
+              </ul>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="w3-panel myLink" id="show_support">
+      <div class="w3-row-padding" style="margin:0 -16px">
+        <div class="w3-half">
+          <h5>Support</h5>
+          <div class="w3-container w3-white">
+            <div class="w3-row">
+              <h4>3G4G Proxy</h4>
+
+              <i class="fa fa-user" style="width:30px"></i> Son Bui<br>
+              <i class="fa fa-map-marker-alt" style="width:30px"></i>Hoang Mai, Hanoi, Vietnam<br>
+              <i class="fa fa-phone" style="width:30px"></i> Phone: +84 973928584<br>
+              <i class="fa fa-envelope" style="width:30px"> </i> Email: thanhson1903@gmail.com<br>
+              <br>
+              <i class="fa fa-user" style="width:30px"></i> Luc Nguyen<br>
+              <i class="fa fa-map-marker-alt" style="width:30px"></i>Ha Dong, Hanoi, Vietnam<br>
+              <i class="fa fa-phone" style="width:30px"></i> Phone: +84 981888234<br>
+              <i class="fa fa-envelope" style="width:30px"> </i> Email: theluc95@gmail.com<br>
+              <br>
+              <p>Join <a href="https://www.facebook.com/groups/3g4gproxy/" target="_blank">3G4G Proxy's</a> group</p>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="snackbar"></div>
+    <br>
+    <!-- Footer -->
+    <footer class="w3-container w3-padding-16 w3-light-grey">
+      <!-- <h4>FOOTER</h4> -->
+      <p>Create by <a style="text-decoration:none" href="#" target="_blank" class="w3-text-green ">TECHTA</a> -
+        Copyright 2020.</p>
+    </footer>
+    <!-- End page content -->
+  </div>
+
+  <script>
+    // Get the Sidebar
+    var mySidebar = document.getElementById("mySidebar");
+
+    // Get the DIV with overlay effect
+    var overlayBg = document.getElementById("myOverlay");
+
+    // Toggle between showing and hiding the sidebar, and add overlay effect
+    function w3_open() {
+      if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+        overlayBg.style.display = "none";
+      } else {
+        mySidebar.style.display = 'block';
+        overlayBg.style.display = "block";
+      }
+    }
+
+    // Close the sidebar with the close button
+    function w3_close() {
+      mySidebar.style.display = "none";
+      overlayBg.style.display = "none";
+    }
+  </script>
+  <script src="cronstrue-i18n.min.js" type="text/javascript"></script>
+  <script src="server_ajax.js"></script>
+  <script src="ardublockly_design.js"></script>
+  <script src="ardublockly.js"></script>
+  <script>
+    window.addEventListener('load', function load(event) { //On page loaded
+      window.removeEventListener('load', load, false);
+      Ardublockly.init();
+    });
+  </script>
+
+  <script>
+    document.getElementsByClassName("proxytablink")[0].click();
+
+    function openProxyMoreAction(evt, cityName) {
+      var i, x, tablinks;
+      x = document.getElementsByClassName("proxy_config_table");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("proxytablink");
+      for (i = 0; i < x.length; i++) {
+        tablinks[i].classList.remove("w3-light-grey");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.classList.add("w3-light-grey");
+    }
+  </script>
+
+  <script>
+    function fullsizeToHaftsize(chars) {
+      chars = chars.replace(/。/g, '.');
+      var ascii = '';
+      for (var i = 0; i < chars.length; i++) {
+        var j = chars[i].charCodeAt(0);
+
+        // make sure we only convert half-full width char
+        if (j >= 0xFF00 && j <= 0xFFEF) {
+          j = 0xFF & (j + 0x20);
+        }
+
+        ascii += String.fromCharCode(j);
+      }
+
+      return ascii;
+    }
+
+    function parseCron(data) {
+      var languageDomain = "en";
+      var language = "en";
+      switch (languageDomain) {
+        case "":
+          language = "ja";
+          break;
+        case "zh":
+          language = "zh_CN";
+          break;
+        case "zh-tw":
+          language = "zh_TW";
+          break;
+        case "es":
+          language = "es";
+          break;
+        case "ru":
+          language = "ru";
+          break;
+        case "fr":
+          language = "fr";
+          break;
+        case "pt":
+          language = "pt_BR";
+          break;
+        case "de":
+          language = "de";
+          break;
+        case "ko":
+          language = "ko";
+          break;
+        case "tr":
+          language = "tr";
+          break;
+        case "uk":
+          language = "uk";
+          break;
+        case "pl":
+          language = "pl";
+          break;
+        default:
+          language = "en";
+          break;
+      }
+
+      try {
+        return cronstrue.toString(data, { dayOfWeekStartIndexZero: false, locale: language });
+      } catch (err) {
+        // alert(err);
+        return false;
+      }
+    };
+  </script>
+
+</body>
+
+</html>

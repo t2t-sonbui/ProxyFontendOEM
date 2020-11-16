@@ -1,0 +1,2360 @@
+﻿@charset "utf-8";
+
+body {
+    position: relative;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #242424;
+    background-color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+html {
+    height: 100%;
+}
+
+/* リンク */
+a {
+    color: #242424;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    /* opacity: 0.8; */
+    transition: .3s;
+    text-decoration: underline;
+}
+
+a img:hover {
+    opacity: 0.7;
+}
+
+::-webkit-input-placeholder {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+:-moz-placeholder {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+input, select, textarea, button {
+    font-size: 13px;
+    outline: none;
+    border: 1px solid #ababab;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+input:hover, select:hover, textarea:hover {
+    opacity: 0.8;
+}
+
+input[type=text],
+input[type=number],
+input[type="email"],
+textarea, select {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+input[type=button],
+input[type=submit],
+.black_btn,
+.white_btn {
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    max-width: 150px;
+}
+
+input[type=button],
+input[type=submit] {
+    background-color: #ababab;
+}
+
+input[type=button].black_btn,
+input[type=submit].black_btn,
+.black_btn {
+    color: #fff;
+    border: 1px solid #000;
+    background-color: #000;
+}
+
+input[type=button].white_btn,
+input[type=submit].white_btn,
+.white_btn {
+    /* color: #888; */
+    border: 1px solid #ababab;
+    background-color: #fff;
+}
+
+input[type=button].black_btn:hover,
+input[type=submit].black_btn:hover,
+.black_btn:hover {
+    opacity: 0.7;
+}
+
+input[type=button].white_btn:hover,
+input[type=submit].white_btn:hover,
+.white_btn:hover {
+    border: 1px solid #242424;
+    color: #242424;
+    text-decoration: unset;
+}
+
+input[type=button].black_btn:active,
+input[type=submit].black_btn:active,
+button.black_btn:active,
+.black_btn:active,
+input[type=button].black_btn_active,
+input[type=submit].black_btn_active,
+button.black_btn_active {
+    background-color: #fff;
+    color: #000;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border: 1px solid rgb(23, 134, 194);
+    border-radius: 5px;
+}
+
+ul li {
+    /* font-size: small; */
+    margin: 0;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 0;
+    list-style-type: none;
+}
+
+ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+
+th {
+    border: solid 1px black;
+    background-color: #dbdbdb;
+}
+
+td {
+    border: solid 1px black;
+    background-color: white;
+}
+
+h3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+h4 {
+    margin-bottom: 5px;
+}
+
+h4 + p,
+.indent {
+    padding-left: 1em;
+}
+
+
+.stop_scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+}
+
+.clearfix {
+    display: block;
+}
+
+.error_text {
+    color: #F50000;
+}
+
+.error_text::before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f071";
+    color: #F50000;
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+
+/* ベースのブロック */
+#wrap {
+    position: relative;
+    max-width: 1100px;
+    min-height: calc(100vh - 190px);
+    margin: 0 auto;
+    padding: 15px 35px 0;
+    box-sizing: border-box;
+}
+
+#loadingRakko {
+    display: none;
+    position: absolute;
+}
+
+#loadingRakko::before {
+    content: url('../../image/loading_rakko.gif');
+}
+
+.error_area::before {
+    content: '';
+    display: inline-block;
+    width: 300px;
+    height: 200px;
+    vertical-align: middle;
+    background: url('../../image/error_rakko.png');
+    background-size: 150px 150px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#bookmarklet {
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+}
+
+#bookmarklet:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f02e";
+    color: #000;
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+#bookmarkletName::after {
+    content: "Bookmarklet";
+}
+
+.question {
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+}
+
+.question:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f059";
+    color: #000;
+    font-weight: 900;
+    margin-left: 5px;
+}
+
+
+/**********　ヘッダー　***********/
+header {
+    max-width: 1030px;
+    margin: 20px auto 0;
+    display: flex;
+}
+
+/* タイトルロゴ */
+h1 {
+    max-width: 580px;
+    font-size: 30px;
+    margin: 0 15px;
+    line-height: 1.3;
+}
+
+.h1_jp {
+    font-family: 'Kosugi Maru', sans-serif;
+    font-weight: 600;
+    line-height: 1.1;
+    display: inline-block;
+}
+
+.h1_en {
+    font-family: 'Jura', sans-serif;
+    line-height: 1;
+    display: inline-block;
+}
+
+.h1_tool {
+    font-weight: 600;
+}
+
+h1 a:hover {
+    text-decoration: unset;
+    opacity: 0.8;
+}
+
+h1 img {
+    width: 250px;
+}
+
+h1 .h1_en img {
+    width: 100%;
+    max-width: 230px;
+    margin-bottom: -3px;
+}
+
+h1 .h1_jp img {
+    width: 100%;
+    max-width: 180px;
+    margin-bottom: -3px;
+}
+
+#logoRakko {
+    position: relative;
+}
+
+#logoRakko img {
+    height: 70px;
+    flex: initial;
+}
+
+/* ラッコ光る
+.reflection {
+    height      :100%;
+    width       :30px;
+    position    :absolute;
+    top         :-180px;
+    left        :0;
+    background-color: #fff;
+    opacity     :0;
+    transform: rotate(45deg);
+    animation: reflection 2s ease-in-out infinite;
+    -webkit-transform: rotate(45deg);
+    -webkit-animation: reflection 2s ease-in-out infinite;
+    -moz-transform: rotate(45deg);
+    -moz-animation: reflection 2s ease-in-out infinite;
+    -ms-transform: rotate(45deg);
+    -ms-animation: reflection 2s ease-in-out infinite;
+    -o-transform: rotate(45deg);
+    -o-animation: reflection 2s ease-in-out infinite;
+}
+ 
+@keyframes reflection {
+    0% { transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { transform: scale(50) rotate(45deg); opacity: 0; }
+}
+@-webkit-keyframes reflection {
+    0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { -webkit-transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { -webkit-transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { -webkit-transform: scale(50) rotate(45deg); opacity: 0; }
+}
+@-moz-keyframes reflection {
+    0% { -moz-transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { -moz-transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { -moz-transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { -moz-transform: scale(50) rotate(45deg); opacity: 0; }
+}
+@-ms-keyframes reflection {
+    0% { -ms-transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { -ms-transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { -ms-transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { -ms-transform: scale(50) rotate(45deg); opacity: 0; }
+}
+@-o-keyframes reflection {
+    0% { -o-transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { -o-transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { -o-transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { -o-transform: scale(50) rotate(45deg); opacity: 0; }
+} */
+
+.description {
+    text-align: left;
+    font-size: 12pt;
+    background-color: inherit;
+    padding: 0;
+    line-height: 1.3;
+    margin: 5px 15px 0;
+    box-sizing: border-box;
+}
+
+/* お気に入り、人気ツール、タグリスト　ポップアップ */
+.top_menu {
+    flex: initial;
+    width: 30px;
+    max-width: 10vw;
+    margin: 7px 0 0 20px;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.header_title_box {
+    flex: auto;
+}
+
+header .fa-twitter {
+    color: #55acee;
+    flex: initial;
+    width: 30px;
+    max-width: 10vw;
+    margin: 7px 0 0 20px;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+
+/**********　フッター　***********/
+footer {
+    max-width: 1030px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.group_link {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 13px;
+}
+.pc_group_link_label {
+    display: inline-block;
+}
+.sp_group_link_label {
+    display: none;
+}
+.group_link a {
+    font-size: 14px;
+}
+
+.footer_nav_box {
+    display: flex;
+}
+
+.footer_lang_nav {
+    text-align: left;
+    flex: auto;
+}
+
+.footer_nav a {
+    margin-right: 5px;
+}
+
+.footer_lang_nav a {
+    display: block;
+    margin: 5px 0 5px 10px;
+    width: 100px;
+}
+
+.footer_nav a:last-child {
+    margin-right: 0;
+}
+
+.footer_nav {
+    font-size: small;
+    text-align: right;
+    flex: auto;
+}
+
+/**********　ナビメニュー　***********/
+/* 検索バー */
+#headerSearchArea {
+    box-sizing: border-box;
+    margin-top: 5px;
+    min-width: 286px;
+}
+
+#headerSearchArea .search_keyword_input {
+    width: 250px;
+    height: 34px;
+    box-sizing: border-box;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #ababab;
+    border-right: none;
+}
+
+#toolListNavLeft .search_keyword_input {
+    width: 250px;
+    min-height: 45px;
+    border: 1px solid #999;
+    border-radius: 5px;
+}
+
+.search_keyword_input {
+    background-color: #f9f9f9;
+}
+
+.search_keyword_input:focus {
+    outline: 0;
+    background-color: #fff;
+}
+
+#btnHeaderToolSearch {
+    float: right;
+    border-radius: 0 5px 5px 0;
+}
+
+#searchKeyword {
+    float: left;
+}
+
+#btnShowSearch {
+    display: none;
+}
+
+/* 検索結果ポップアップ */
+#pcSearchResultArea {
+    right: 100px;
+    width: 270px;
+}
+
+#searchResultNotMsg,
+#pcSearchResultNotMsg {
+    display: none;
+}
+
+/* #pcSearchResultArea #loadingRakko {
+    display: block;
+    left: 50%;
+    transform: translate(-50%, 10%);
+}
+#pcSearchResultArea #loadingRakko::before {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-image: url(../../image/loading_rakko.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+} */
+
+#searchTextArea .menu_label {
+    margin-top: 15px;
+}
+
+#searchTextArea {
+    text-align: left;
+}
+
+#searchTextInArea {
+    display: none;
+}
+
+
+/* ポップアップメニュー */
+#navMenuArea {
+    right: 35px;
+}
+
+#pcSearchResultArea,
+#navMenuArea,
+#langSelectArea {
+    top: -40px;
+    box-sizing: border-box;
+    max-width: 270px;
+    border-radius: 5px;
+    border: 1px solid #ababab;
+    padding: 10px;
+}
+
+#langSelectArea {
+    top: unset;
+    bottom: 50px;
+    max-width: 600px;
+}
+
+#langSelectInArea {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#pcSearchResultInArea,
+#navMenuInArea {
+    overflow: hidden auto;
+    max-height: calc(100vh - 130px);
+}
+
+.menu_label {
+    background-color: #f3f2f2;
+    color: #000;
+    padding: 5px 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+.menu_label::before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f054";
+    color: #000;
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+#searchTextArea ul,
+#pcSearchResultInArea ul,
+#navMenuArea ul {
+    margin: 5px 0 10px;
+    padding-left: 19px;
+}
+
+#searchTextArea ul li,
+#pcSearchResultInArea ul li,
+#navMenuArea ul li {
+    list-style-type: disc;
+    margin: 5px 8px 0 8px;
+}
+
+#favoUl li a,
+#popularUl li a,
+#pcSearchResultUl li a,
+#searchResultUl li a {
+    display: block;
+    width: 100%;
+}
+
+#favoUl li a {
+    max-width: 170px;
+}
+
+#favoUl li:first-child .favo_up_btn {
+    visibility: hidden;
+}
+
+.favo_list {
+    display: flex;
+    justify-content: space-between;
+}
+
+#tagListArea {
+    padding: 8px 0 0 5px;
+}
+
+#tagListArea a {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0 5px 5px 0;
+    max-width: unset;
+}
+
+#tagListArea a::before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f02b";
+    color: #000;
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+#searchResultNotMsg,
+#pcSearchResultNotMsg,
+#favoNotMsg {
+    margin: 5px 0;
+    padding-left: 10px;
+}
+
+.favo_up_btn {
+    float: right;
+    margin: auto 0 auto 10px;
+    cursor: pointer;
+}
+
+
+/* コンテンツエリア */
+.container {
+    margin: auto;
+    max-width: 1030px;
+    /* min-height: calc(100vh - 150px); */
+}
+
+.page_msg {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14pt;
+    margin-top: 20px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#topTagArea {
+    max-width: 1030px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+#topTagArea::-webkit-scrollbar {
+    width: 10px;
+}
+
+#topTagArea::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+#topTagArea::-webkit-scrollbar-thumb {
+    background: #ececec;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 2px #fff;
+}
+
+#topTagInArea {
+    display: inline-block;
+    white-space: nowrap;
+    padding-bottom: 5px;
+}
+
+#topTagArea a {
+    box-sizing: border-box;
+    display: inline-block;
+    margin-right: 5px;
+    max-width: unset;
+}
+
+#topTagArea a:last-child {
+    margin-right: 0;
+}
+
+/* ツールボックス */
+.tool_box_area {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tool_box_area a {
+    position: relative;
+    width: calc((100% - 30px) / 3);
+    margin-left: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.tool_box_area a:hover {
+    /* background-color: #f9f9f9; */
+    background-color: rgba(113, 194, 238, 0.5);
+    border: 1px solid #71C2EE;
+    /* color: #f13f4a; */
+}
+
+.tool_box_area a:hover .tool_box_img {
+    bottom: -15px;
+    opacity: 1;
+}
+
+.tool_box_img {
+    height: 60px;
+    position: absolute;
+    /* transition: all 0.6s ease; */
+    bottom: -60px;
+    right: -10px;
+    opacity: 0;
+    transform: rotate(-20deg);
+    -moz-transform: rotate(-20deg);
+    -webkit-transform: rotate(-20deg);
+}
+
+.tool_sortable_area {
+    position: absolute;
+    width: 50%;
+    height: 100px;
+    left: 25%;
+}
+
+.tool_title_box {
+    padding: 15px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tool_title {
+    width: calc(100% - 30px);
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.tool_description {
+    height: 55px;
+    padding-top: 5px;
+    font-size: 12px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.favo_btn, .tool_favo_btn {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f005";
+    line-height: 1;
+    cursor: pointer;
+    position: absolute;
+    color: #ebebeb;
+}
+
+.favo_btn {
+    top: -13px;
+    right: -14px;
+    font-size: 24px;
+}
+
+.tool_favo_btn {
+    font-size: 24px;
+    top: -13px;
+    left: -14px;
+    z-index: 30;
+}
+
+.favo_on {
+    color: #ffed27;
+}
+
+.hint_box {
+    z-index: 50;
+    max-width: 300px;
+    display: none;
+    padding: 10px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #fff;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.more_view {
+    width: 100%;
+    text-align: right;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.more_view a::after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f101";
+    margin-left: 5px;
+}
+
+#toolListMsgArea {
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#toolListInfo {
+    margin: 20px 0;
+    box-sizing: border-box;
+}
+
+#toolListInfo table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+#toolListInfo table th, #toolListInfo table td {
+    text-align: center;
+    padding: 8px 0;
+    border: 0;
+}
+
+#toolListInfo table th {
+    background-color: inherit;
+    border-bottom: solid 1px #ccc;
+}
+
+#toolListInfo table tr {
+    background-color: inherit;
+    border-bottom: solid 1px #eee;
+    cursor: pointer;
+}
+
+#toolListInfo table td {
+    background-color: inherit;
+}
+
+#toolListInfo table tr.tool_list_data:hover {
+    background-color: #eee;
+}
+
+
+.visible {
+    display: block;
+}
+
+.invisible {
+    display: none;
+}
+
+/**********　ツールページ　***********/
+/* .howto_area {
+    margin: auto;
+    width: 900px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #dbdbdb;
+    box-sizing: border-box;
+}
+.howto_title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.howto_area ul {
+    list-style-type: decimal
+} */
+
+/* ツールエリア */
+.tool_area {
+    position: relative;
+}
+
+/* 外枠 */
+.one_column_box {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #e6e6e6;
+    box-sizing: border-box;
+    border-radius: 5px;
+    display: block;
+}
+
+.one_column_box input[type="text"],
+.multi_column_box input[type="text"] {
+    padding: 7px 10px;
+}
+
+.one_column_box textarea,
+.multi_column_box textarea {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.one_column_box td,
+.one_column_box th,
+.multi_column_box td,
+.multi_column_box th {
+    padding: 5px 10px;
+}
+
+/* 外枠（2カラム） */
+.multi_column_box {
+    display: flex;
+}
+
+.multi_column_box .column_box_one,
+.multi_column_box .column_box_two,
+.multi_column_box .column_box_three {
+    min-height: 300px;
+    max-height: 300px;
+    overflow: auto;
+    overflow-x: hidden;
+    border: 1px solid #e6e6e6;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.multi_column_box .column_box_one:first-child,
+.multi_column_box .column_box_two:first-child,
+.multi_column_box .column_box_three:first-child {
+    margin-right: 20px;
+}
+
+.multi_column_box .column_box_one {
+    flex: 1;
+}
+
+.multi_column_box .column_box_two {
+    flex: 2;
+}
+
+.multi_column_box .column_box_three {
+    flex: 3;
+}
+
+/* ツール内汎用クラス */
+.list_disc li {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.list_circle li {
+    list-style-type: circle;
+    margin-left: 20px;
+}
+
+.list_square li {
+    list-style-type: square;
+    margin-left: 20px;
+}
+
+.list_decimal li {
+    list-style-type: decimal;
+    margin-left: 20px;
+}
+
+.list_decimalzero li {
+    list-style-type: decimal-leading-zero;
+    margin-left: 20px;
+}
+
+.margin_bottom_5 {
+    margin-bottom: 5px;
+}
+
+.margin_bottom_10 {
+    margin-bottom: 10px;
+}
+
+.margin_bottom_3 {
+    margin-bottom: 3px;
+}
+
+.margin_right_5 {
+    margin-right: 5px;
+}
+
+.align_center {
+    text-align: center;
+}
+
+.disc_ul li {
+    list-style: disc;
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: #ababab;
+    box-sizing: border-box;
+    margin: 10px 0;
+}
+
+.cando_link {
+    border-bottom: 1px solid #242424;
+}
+
+.cando_link::after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f35d";
+    margin-left: 5px;
+}
+
+a.cando_link:hover {
+    text-decoration: unset;
+    opacity: 0.8;
+}
+
+.tool_common_area strong {
+    font-weight: bold;
+    /* border-bottom: 1px solid #000000; */
+}
+
+/* チェックボックス */
+.tool_area input[type="checkbox"],
+.tool_area input[type="radio"] {
+    display: none;
+}
+
+.tool_area input[type="checkbox"] + span,
+.tool_area input[type="radio"] + span {
+    position: relative;
+    padding-left: 25px;
+    margin-right: 20px;
+    color: #ababab;
+    cursor: pointer;
+}
+
+.tool_area input[type="checkbox"] + span::before,
+.tool_area input[type="radio"] + span::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ababab;
+    border-radius: 4px;
+    margin-top: 3px;
+}
+
+.tool_area input[type="radio"] + span::before {
+    border-radius: 10px;
+}
+
+.tool_area input[type="checkbox"]:checked + span,
+.tool_area input[type="radio"]:checked + span {
+    color: #000;
+}
+
+.tool_area input[type="checkbox"]:checked + span::after,
+.tool_area input[type="radio"]:checked + span::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -3px;
+    left: 5px;
+    width: 5px;
+    height: 12px;
+    transform: rotate(40deg);
+    border-bottom: 2px solid #000;
+    border-right: 2px solid #000;
+    margin-top: 3px;
+}
+
+.tool_area input[type="radio"]:checked + span::after {
+    top: 3px;
+    left: 3px;
+    border-radius: 10px;
+    width: 9px;
+    height: 9px;
+    background-color: #000;
+}
+
+
+/* 共用エリア */
+.note_area {
+    padding: 10px;
+}
+
+.note_title {
+    border-bottom: 1px solid #000;
+}
+
+.note_title:last-child {
+    margin-top: 5px;
+}
+
+.tool_common_area {
+    background-color: #f9f9f9;
+    width: 100%;
+    margin: 20px auto 0;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.tool_common_area h3 {
+    margin-bottom: 10px;
+}
+
+.back_white {
+    background-color: rgba(255, 255, 255, 0.8)
+}
+
+.tool_common_area div {
+    margin-bottom: 15px;
+}
+
+.tool_common_area ul li {
+    list-style: disc;
+    list-style-type: disc;
+    line-height: 22px;
+    margin-left: 20px;
+}
+
+
+ul.toha_ul li {
+    margin-left: 32px;
+}
+
+#toolSnsTagArea {
+    width: 100%;
+    display: flex;
+    margin: 20px auto;
+}
+
+#toolSnsArea, #toolTagArea {
+    flex: 1;
+}
+
+#toolSnsArea {
+    display: flex;
+    height: 34px;
+}
+
+#toolSnsArea a {
+    text-align: center;
+    width: 60px;
+    display: block;
+    border-radius: 5px;
+    padding: 5px 8px 2px;
+    margin-right: 8px;
+}
+
+#toolSnsArea a:hover {
+    transition: .3s;
+    text-decoration: unset;
+}
+
+#toolSnsArea a:last-child {
+    margin-right: 0;
+}
+
+#toolTagArea a {
+    float: right;
+    margin-left: 8px;
+    font-size: 12px;
+    max-width: unset;
+}
+
+/* 広告エリア */
+#adArea {
+    width: 100%;
+    margin: 20px auto 0;
+}
+
+#adSlider a {
+    outline: none;
+}
+#adSlider img {
+    width: 100%;
+    border-style:none;
+}
+
+#adSlider .slick-prev {
+    left: 0;
+}
+#adSlider .slick-next {
+    right: 0;
+}
+
+#adSlider .slick-next:before,
+#adSlider .slick-prev:before {
+    color: rgb(64, 65, 72);
+    opacity: 1;
+}
+
+#adSlider .slick-slide {
+    padding: 0 7px;
+}
+#adSlider .slick-list {
+    margin: 0 25px;
+}
+
+
+/**********　SNSシェアボタン ***********/
+/* .acordion_open,
+.acordion_close {
+    display: none;
+}
+.acordion {
+    position: fixed;
+    bottom: 150px;
+    left: 0;
+    z-index: 1;
+    border-radius: 0 5px 5px 0;
+    color: #fff;
+}
+.post_sns_fixed {
+	line-height: 0;
+	text-align: center;
+	z-index: 1;
+}
+.post_sns_fixed ul {
+    text-decoration:none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+.post_sns_fixed ul li {
+    font-size: 20px;
+    margin: 0;
+}
+.post_sns_fixed a {
+	color:#fff;
+	display: block;
+    padding: 10px;
+} 　 */
+/* Twitter */
+.twitter_share {
+    border-color: #3faef3;
+    color: #3faef3;
+    border: 1px solid #3faef3;
+}
+
+.twitter_share:hover {
+    background-color: #3faef3;
+    color: #ffffff;
+}
+
+/* Facebook */
+.facebook_share {
+    border-color: #5477c4;
+    color: #5477c4;
+    border: 1px solid #5477c4;
+}
+
+.facebook_share:hover {
+    background-color: #5477c4;
+    color: #ffffff;
+}
+
+/* hatena */
+.hatena_share {
+    border-color: #4285d6;
+    color: #4285d6;
+    border: 1px solid #4285d6;
+}
+
+.hatena_share:hover {
+    background-color: #4285d6;
+    color: #ffffff;
+}
+
+.icon-hatena:before {
+    content: "\e00a";
+}
+
+/* Pocket */
+.pocket_share {
+    border-color: #f3596d;
+    color: #f3596d;
+    border: 1px solid #f3596d;
+}
+
+.pocket_share:hover {
+    background-color: #f3596d;
+    color: #ffffff;
+}
+
+/* LINE */
+.line_share {
+    border-color: #26c726;
+    color: #26c726;
+    font-size: 16px;
+    border: 1px solid #26c726;
+}
+
+.line_share:hover {
+    background-color: #26c726;
+    color: #ffffff;
+}
+
+.icon-line:before {
+    content: "\e009";
+}
+
+/* copy */
+.copy {
+    border-color: #555;
+    color: #555;
+    font-size: 15px;
+    cursor: pointer;
+    border: 1px solid #555;
+}
+
+.copy:hover {
+    background-color: #555;
+    color: #ffffff;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/**********　このサイトについて　***********/
+.container_in_area {
+    max-width: 1030px;
+    margin: auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-sizing: border-box;
+}
+
+/**********　お気に入り　***********/
+#shareUrlArea {
+    width: 100%;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 10px;
+}
+
+#favoShareUrlLabel {
+    padding: 6px 0;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+#favoShareUrl {
+    max-width: 50%;
+    width: 200px;
+    padding: 6px 10px;
+    margin-right: 5px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    cursor: pointer;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#favoShareUrl:hover {
+    opacity: 0.8;
+}
+
+#btnCopyShareUrl {
+    max-height: 25px;
+    font-size: 12px;
+}
+
+/**********　お問い合わせフォーム　***********/
+.contact_input_area {
+    max-width: 500px;
+    margin: 15px auto 0 auto;
+}
+
+.contact_input_label {
+    width: 30%;
+    float: left;
+}
+
+.contact_input_area input[type="text"],
+.contact_input_area input[type="email"] {
+    width: 60%;
+    float: right;
+}
+
+.contact_input_area textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.contact_submit_area {
+    text-align: center;
+}
+
+#sendContact {
+    padding: 10px 15px;
+}
+
+.contact_msg {
+    text-align: center;
+    margin: 50px 0;
+}
+
+.contact_input_area textarea:focus:invalid,
+.contact_input_area input:focus:invalid {
+    border: 1px solid tomato;
+}
+
+/**********　404ページ　***********/
+#notFoundArea, #maintenanceArea, #legacyErrArea {
+    text-align: center;
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+}
+
+#notFoundArea .error_area,
+#maintenanceArea .error_area {
+    font-size: 35px;
+    font-weight: bold;
+}
+#legacyErrArea .error_area {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#notFoundArea .error_area::before,
+#maintenanceArea .error_area::before,
+#legacyErrArea .error_area::before{
+    display: block;
+    width: 100%;
+    height: 190px;
+}
+
+#backTop {
+    display: block;
+    margin: 15px auto 0;
+    width: 150px;
+}
+
+/**********　TOOL MANAGE　***********/
+
+/* 見出し */
+h2 {
+    background-color: #dbdbdb;
+    font-size: 19px;
+    padding: 10px 15px;
+    max-width: 580px;
+    box-sizing: border-box;
+    margin: auto;
+    line-height: 1;
+}
+
+.header_right_area {
+    flex: auto;
+    text-align: right;
+}
+
+.header_right_area ul li {
+    display: inline;
+}
+
+.header_right_area a {
+    text-decoration: none;
+    background-color: white;
+    border: solid 0.5px black;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.container_manage {
+    margin: auto;
+    width: 900px;
+    min-height: calc(100vh - 180px);
+    padding: 15px 15px;
+    box-sizing: border-box;
+}
+
+.container_manage h3 {
+    padding: 15px 0 5px;
+}
+
+.list_table_area {
+    margin-top: 5px;
+}
+
+.container_manage th,
+.container_manage td {
+    vertical-align: middle;
+    padding: 3px;
+    box-sizing: border-box;
+}
+
+.tool_list_table {
+    width: 100%;
+}
+
+.tool_list_table tr:hover td,
+.tag_list_table tr:hover td,
+.lang_list_table tr:hover td {
+    background-color: #e7e7e7;
+}
+
+
+/**********　TOOL MANAGE：トップページ　***********/
+
+#toolListNavLeft {
+    float: left;
+}
+
+#toolListNavLeft input[type="text"] {
+    height: 20px;
+}
+
+#toolListNavLeft .tool_search_area {
+    position: relative;
+    display: block;
+    float: left;
+}
+
+#toolListNavLeft #btnToolSearchReset {
+    margin: 0 0 0 5px;
+    float: left;
+}
+
+#toolListNavTag {
+    float: left;
+    width: 520px;
+    margin-left: 10px;
+}
+
+#toolListNavTag a {
+    margin-left: 5px;
+    white-space: nowrap;
+}
+
+.view_cnt {
+    text-align: right;
+    clear: both;
+}
+
+.tool_list_table th,
+.tool_list_table td {
+    width: 250px;
+}
+
+.tool_list_table td {
+    cursor: pointer;
+}
+
+.tool_list_table th:first-child,
+.tool_list_table td:first-child,
+.tool_list_table th:last-child,
+.tool_list_table td:last-child {
+    width: 51px;
+    text-align: center;
+}
+
+.sort_btn {
+    cursor: pointer;
+    float: right;
+}
+
+
+/**********　TOOL MANAGE：ツール登録　***********/
+
+.tool_add_step_area {
+    margin-bottom: 20px;
+}
+
+.add_tool_text_list {
+    display: none;
+}
+
+.acd_add_text_list {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-top: 1px solid #888888;
+}
+
+.acd_add_text_list.registered {
+    background-color: rgba(255, 0, 30, 0.1);
+}
+
+.tool_add_step_area .acd_add_text_list:last-child {
+    border-bottom: 1px solid #888888;
+}
+
+.add_tool_text_list, .add_tool_tag_list {
+    background-color: #dbdbdb;
+    margin: 5px 0 15px 0;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.add_tool_text_list li {
+    width: 45%;
+    float: left;
+}
+
+.add_tool_tag_list li {
+    width: 20%;
+    float: left;
+}
+
+#btnAddTool, #btnModifyTool {
+    width: 170px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.add_textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add_textarea:placeholder-shown {
+    background-color: rgb(255, 212, 212);
+}
+
+.jp_label_reference {
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+
+/*#btnLabelCodeDownload,*/
+/*#btnToolLabelCodeDownload {*/
+/*    max-width: fit-content;*/
+/*}*/
+#btnToolLabelCodeDownload,
+#btnTranslationLabelDownload {
+    float: right;
+}
+
+#btnToolLabelCodeDownload {
+    margin-right: 10px;
+}
+
+#btnImportTextFile {
+    margin-bottom: 15px;
+}
+
+/**********　TOOL MANAGE：タグ管理・言語管理　***********/
+.tag_input_area,
+.lang_input_area,
+.lang_tag_input_area {
+    margin-top: 10px;
+}
+
+.input_label {
+    width: 20%;
+    float: left;
+}
+
+.tag_input_area input[type="text"] {
+    width: 70%;
+}
+
+#btnAddTag, #btnAddLang {
+    margin-top: 15px;
+}
+
+.tag_list_table th,
+.tag_list_table td {
+    width: 284px;
+    text-align: center;
+}
+
+.tag_list_table td {
+    cursor: pointer;
+}
+
+.lang_list_table th,
+.lang_list_table td {
+    width: 213px;
+    text-align: center;
+}
+
+.lang_list_table td {
+    cursor: pointer;
+}
+
+.label_kind {
+    background-color: #dbdbdb;
+    text-align: left;
+    padding: 5px 10px;
+    margin-top: 10px;
+    clear: both;
+}
+
+.lang_input_area,
+.lang_tag_input_area {
+    clear: both;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.lang_input_area li,
+.lang_tag_input_area li {
+    float: left;
+    margin-bottom: 10px;
+    width: 48%;
+}
+
+.lang_input_label {
+    float: left;
+    margin-right: 15px;
+}
+
+.lang_input_code {
+    float: left;
+    margin-right: 5px;
+    width: 150px;
+    text-align: left;
+}
+
+.lang_input_text {
+    float: right;
+}
+
+.lang_input_text textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#addLangPopupBox .jp_label_reference {
+    background-color: #e6e6e6;
+    max-height: 200px;
+    overflow: auto;
+
+}
+
+#btnViewAddLangBox, #btnLabelCodeDownload {
+    float: left;
+}
+
+#btnLabelCodeDownload {
+    margin-left: 10px;
+}
+
+
+/* 吹き出し */
+.balloon, .balloon_bottom {
+    position: relative;
+    background-color: #fff;
+}
+
+.balloon:before, .balloon_bottom:before {
+    content: "";
+    position: absolute;
+    border: 12px solid transparent;
+    z-index: 2;
+}
+
+.balloon:after, .balloon_bottom:after {
+    content: "";
+    position: absolute;
+    border: 14px solid transparent;
+    z-index: 1;
+}
+
+.balloon:before {
+    top: -34px;
+    right: 1%;
+    border-bottom: 12px solid #FFF;
+}
+
+.balloon:after {
+    top: -38px;
+    right: 1px;
+    border-bottom: 14px solid #ababab;
+}
+
+.balloon_bottom:before {
+    bottom: -33px;
+    left: 1px;
+    border-top: 12px solid #FFF;
+}
+
+.balloon_bottom:after {
+    bottom: -37px;
+    left: -1px;
+    border-top: 14px solid #ababab;
+}
+
+
+/* ポップアップ */
+.popup {
+    display: none;
+    position: absolute;
+    z-index: 50;
+    background-color: #fff;
+}
+
+.popup_bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(58, 58, 58, 0.5);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    z-index: 50;
+}
+
+.popup_box {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    margin: 10px auto;
+}
+
+.popup_box_l {
+    max-width: calc(100vw - 20px);
+    width: 1030px;
+    box-sizing: border-box;
+    padding: 20px;
+    background-color: white;
+    margin: 10px auto;
+    border-radius: 5px;
+    position: relative;
+}
+
+.popup_box h2, .popup_box_l h2 {
+    font-size: 20px;
+    width: 100%;
+    background-color: inherit;
+}
+
+.popup_hide_btn {
+    font-size: 35px;
+    color: gray;
+    float: right;
+    line-height: 1;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.popup_msg {
+    margin-top: 20%;
+    padding: 20px;
+    text-align: center;
+    background-color: black;
+    color: #fff;
+}
+
+.popup_scl_area {
+    width: auto;
+    height: 60vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin-top: 10px;
+}
+
+.sp_only {
+    display: none;
+}
+
+.pr_box a {
+    color: #6c757d;
+}
+.pr_box a:hover {
+    opacity: 0.7;
+}
+.pr_box {
+    text-align: right;
+    margin: -20px 0 15px;
+}
+.pr_box b {
+    font-weight: bold;
+}
+.pr_label {
+    background-color: #E57F7E;
+    border-radius: 5px;
+    padding: 2px 10px;
+    margin-right: 5px;
+    color: #ffffff;
+}
+
+/* スマホ */
+@media screen and (max-width: 650px) {
+
+    input, select {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    header {
+        margin: 20px 20px 0;
+    }
+
+    #wrap {
+        padding: 15px 20px 0;
+    }
+
+    footer {
+        padding: 0 20px 10px;
+    }
+    .pc_group_link_label {
+        display: none;
+    }
+    .sp_group_link_label {
+        display: block;
+    }
+
+
+    #logoRakko img {
+        height: 50px;
+    }
+
+    h1 {
+        font-size: 20px;
+        margin: 0 10px;
+        line-height: 1.3;
+    }
+
+    .h1_jp {
+        font-size: 24px;
+    }
+
+    .h1_en {
+        font-family: 'Jura', sans-serif;
+        font-size: 30px;
+        line-height: 1;
+    }
+
+    h1 img {
+        width: 200px;
+        max-width: 50vw;
+    }
+
+    h1 .h1_jp img {
+        max-width: 140px;
+        margin-bottom: 0;
+        margin-top: 4px;
+    }
+
+    h1 .h1_en img {
+        max-width: 170px;
+        margin-bottom: 0;
+        margin-top: 4px;
+    }
+
+    .top_menu {
+        font-size: 24px;
+        margin: 5px 0 0 5px;
+    }
+
+    header .fa-twitter {
+        font-size: 24px;
+        margin: 5px 0 0 5px;
+    }
+
+    #btnShowSearch {
+        display: block;
+    }
+
+    #headerSearchArea {
+        display: none;
+    }
+
+
+    /* .description_hide {
+        display: none;
+    } */
+    .tool_favo_btn {
+        font-size: 24px;
+    }
+
+    .description {
+        margin: 0 10px;
+        font-size: 9pt;
+    }
+
+    /* ツールボックス */
+    .tool_box_area a {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    /* ナビメニュー */
+    #searchTextArea #btnToolSearch {
+        float: right;
+    }
+
+    #searchTextArea .search_keyword_input {
+        width: calc(100% - 85px);
+    }
+
+    .nav_btn_area {
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .nav_btn_area:after {
+        content: "";
+        display: block;
+        clear: both;
+        height: 0;
+        visibility: hidden;
+    }
+
+    .nav_btn_area li {
+        vertical-align: middle;
+        text-align: center;
+        width: calc(100% / 4 - 8px);
+    }
+
+    .nav_btn_area li:first-child {
+        margin-left: 0;
+    }
+
+    .nav_btn_area li:last-child {
+        margin-right: 0;
+    }
+
+    .nav_btn_area li a {
+        padding: 10px;
+        display: block;
+        float: none;
+    }
+
+    .nav_btn_area .fas {
+        font-size: 1.5rem;
+    }
+
+    #searchTextArea {
+        width: 100%;
+        margin: 15px 0 60px;
+    }
+
+    #navMenuArea {
+        max-width: calc(100vw - 20px);
+        top: -20px;
+        right: 5px;
+    }
+
+    #langSelectArea {
+        max-width: calc(100vw - 40px);
+    }
+
+    .footer_lang_nav a {
+        width: 100px;
+    }
+
+    .balloon:before {
+        top: -34px;
+        right: 10px;
+    }
+
+    .balloon:after {
+        top: -38px;
+        right: 8px;
+    }
+
+    .popup_hide_btn {
+        top: unset;
+        right: unset;
+        bottom: 20px;
+        left: 45%;
+    }
+
+    .multi_column_box {
+        display: block;
+    }
+
+    .multi_column_box .column_box_one,
+    .multi_column_box .column_box_two,
+    .multi_column_box .column_box_three {
+        max-height: 300px;
+        overflow: auto;
+        overflow-x: hidden;
+        border: 1px solid #e6e6e6;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    .multi_column_box .column_box_one:first-child,
+    .multi_column_box .column_box_two:first-child,
+    .multi_column_box .column_box_three:first-child {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .pc_only {
+        display: none;
+    }
+
+    .sp_only {
+        display: block;
+    }
+
+    .error_area::before {
+        width: 200px;
+        height: 100px;
+        background-size: 100px 100px;
+    }
+
+    #notFoundArea {
+        text-align: center;
+        /* position: static;
+        top: auto;
+        left: auto;
+        transform: none; */
+    }
+
+    #notFoundArea .error_area {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    #notFoundArea .error_area::before {
+        display: block;
+        width: 100%;
+        height: 120px;
+    }
+
+    #toolSnsTagArea {
+        display: block;
+    }
+
+    #toolSnsArea {
+        margin-bottom: 10px;
+    }
+
+    .pr_box {
+        margin: -10px 0 10px;
+        font-size: 10pt;
+    }
+    .pr_label {
+        padding: 1px 5px;
+        margin-right: 3px;
+    }
+    .pr_text {
+        float: right;
+    }
+
+}
+
+/* スマホ */
+@media screen and (max-width: 340px) {
+    footer {
+        display: block;
+    }
+}
+
+/* タブレット */
+@media screen and (min-width: 651px) and (max-width: 896px) {
+
+    /* .header_logo_title_box {
+        transform: translateX(35%);
+    } */
+    header {
+        margin: 25px 25px 0;
+    }
+
+    .header_title_box {
+        word-break: break-all;
+    }
+
+    #logoRakko img {
+        height: 60px;
+    }
+
+    h1 {
+        line-height: 1.1;
+        margin: 0 8px;
+    }
+
+    .h1_jp {
+        max-width: 170px;
+    }
+    .h1_en {
+        max-width: 180px;
+    }
+    .h1_tool {
+        font-size: 24px;
+    }
+
+    .description {
+        font-size: 14px;
+        margin: 5px 8px 0;
+    }
+
+    #headerSearchArea {
+        min-width: 226px;
+    }
+
+    #headerSearchArea .search_keyword_input {
+        width: 190px;
+    }
+
+    #wrap {
+        padding: 15px 25px 0;
+    }
+
+    .pr_box {
+        margin: 0 0 15px;
+    }
+
+    .page_msg {
+        background-color: #fff;
+    }
+
+    /* ツールボックス */
+    .tool_box_area a {
+        width: calc((100% - 15px) / 2);
+    }
+
+    .tool_box_area a:first-child,
+    .tool_box_area a:nth-of-type(2n+1) {
+        margin-left: 0px;
+    }
+
+
+}
+
+/* スマホ・タブレット */
+@media screen and (max-width: 896px) {
+    /* SNSシェアボタン
+    .acordion {
+        display: none;
+    }
+    .acordion,
+    .acordion_open {
+        position: fixed;
+        bottom: 50px;
+        left: 0;
+        z-index: 1;
+        border-radius: 0 5px 5px 0;
+        color: #fff;
+    }
+    .acordion_open, 
+    .acordion_close {
+        display: block;
+        background:#375b51;
+    }
+    .acordion_close,
+    .triger {
+        line-height: 0;
+        font-size: 22px;
+        text-align: center;
+        display: block;
+        padding: 10px;
+        margin: 0;
+    }
+    .acordion_close {
+        border-radius: 0 0 5px 0;
+    }
+    .acordion_open {
+        padding: 1px;
+    }
+    .post_sns_fixed .copy {
+        border-radius: 0;
+    } */
+
+
+}
+
+/* PC */
+@media screen and (min-width: 897px) {
+
+    .tool_box_area a:first-child,
+    .tool_box_area a:nth-of-type(3n+1) {
+        margin-left: 0px;
+    }
+
+    .tool_favo_btn:hover + .hint_box {
+        display: block;
+        position: absolute;
+        top: -20px;
+        left: 15px;
+    }
+
+    #bookmarklet:hover + .hint_box {
+        display: block;
+        position: absolute;
+        top: -20px;
+        left: 15px;
+    }
+
+    .question:hover + .hint_box {
+        display: block;
+        position: absolute;
+        top: -20px;
+        left: 90px;
+    }
+
+}
