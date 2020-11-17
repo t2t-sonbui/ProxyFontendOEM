@@ -764,7 +764,8 @@ Ardublockly.activeLicense = function () {
   var licenseExecute = {
     userInfo: userInfo,
     key: data.get('key'),
-    type: "PRO"
+    type: "PRO",
+    amount: data.get('amount')
   };
 
   ArdublocklyServer.requestActiveLicense(licenseExecute, function (jsonObj) {
