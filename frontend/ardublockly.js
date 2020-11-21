@@ -4,6 +4,7 @@
 var Ardublockly = Ardublockly || {};
 Ardublockly.versionCode = 0;
 Ardublockly.timerMap = new Map();
+Ardublockly.readyShowList = false;
 
 /** Initialize function for Ardublockly, to be called on page load. */
 Ardublockly.init = function () {
@@ -82,19 +83,28 @@ Ardublockly.startRunningInfo = function () {
 
 Ardublockly.startTimerUpdate = function (proxyId) {
   //Sort table
-
   var proxyTimer = setTimeout(function updateProxy() { //cho giua cac lan la 5 giay sau khi thuc hien xong
     console.log("UpdateProxy:" + proxyId);
     ArdublocklyServer.requestProxyStatus(proxyId, function (jsonObj) {
       Ardublockly.jsonUpdateRowRunStatusAndNetwork(jsonObj);
-      ArdublocklyServer.requestProxyInternetIp(proxyId, function (jsonObj) {
-        Ardublockly.jsonUpdateRowIp(jsonObj);
+      if (Ardublockly.readyShowList === true) {
+        ArdublocklyServer.requestProxyInternetIp(proxyId, function (jsonObj) {
+          Ardublockly.jsonUpdateRowIp(jsonObj);
+          if (Ardublockly.timerMap.get(proxyId)) { //Neu chua bi xoa
+            Ardublockly.timerMap.delete(proxyId); //Clear Old
+            proxyTimer = setTimeout(updateProxy, 5000);
+            Ardublockly.timerMap.set(proxyId, proxyTimer); //Update to new
+          }
+        });
+      }else {
+        //bo qua tim ip ngay, tranh lag
         if (Ardublockly.timerMap.get(proxyId)) { //Neu chua bi xoa
           Ardublockly.timerMap.delete(proxyId); //Clear Old
           proxyTimer = setTimeout(updateProxy, 5000);
           Ardublockly.timerMap.set(proxyId, proxyTimer); //Update to new
         }
-      });
+      }
+
     });
   }, 5000);
 
@@ -358,6 +368,8 @@ Ardublockly.openRequestSystemRunConfig = function () {
 };
 
 Ardublockly.openProxyDashboardStatus = function () {
+
+  Ardublockly.readyShowList = false;
   Ardublockly.showDashboadLoading("Loading proxy...");
   ArdublocklyServer.requestAllProxyStatus(function (jsonObj) {
 
@@ -377,6 +389,7 @@ Ardublockly.openProxyDashboardStatus = function () {
     // });
 
     Ardublockly.hideDashboadLoading();
+    Ardublockly.readyShowList = true;
 
   });
 
